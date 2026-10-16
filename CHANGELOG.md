@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-favicon-generator` will be documented in this file.
 
+## v2.0.0 - 2026-10-16
+
+**Full Changelog**: https://github.com/infernalmedia/laravel-favicon-generator/commits/v2.0.0
+
 ## 2.0.0 - unreleased
 
 - Added support for Laravel 13, dropped support for Laravel 10 and 11
