@@ -1,0 +1,31 @@
+# Laravel Favicon Generator
+
+> Laravel package by Infernal Média that generates a complete favicon set (ICO, PNG, SVG, Apple touch icon, web app manifest) from a single source image, plus a `<x-favicon-meta />` Blade component that renders the corresponding meta tags. Maintained fork of blockpoint/laravel-favicon-generator.
+
+## Requirements
+
+- PHP 8.3+, Laravel 12 or 13
+- GD or Imagick extension (Imagick preferred for quality, GD fallback)
+- intervention/image v4, spatie/laravel-package-tools v1.93+
+
+## Install & usage
+
+- Install: `composer require infernalmedia/laravel-favicon-generator`
+- Generate: `php artisan favicon:generate path/to/source.png` (options: `--force`, `--name`, `--short-name`, `--theme-color`, `--background-color`)
+- Meta tags: add `<x-favicon-meta />` inside `<head>`
+- Output directory defaults to `public/favicon`, configurable via `favicon-generator.output_path`
+- Publish config: `php artisan vendor:publish --tag="favicon-generator-config"`
+- Publish views: `php artisan vendor:publish --tag="favicon-generator-views"`
+- Programmatic: `(new InfernalMedia\LaravelFaviconGenerator\LaravelFaviconGenerator)->generate($path, $manifestOptions)`
+
+## Generated files
+
+- `favicon.ico` (16/32/48), `favicon-96x96.png`, `favicon.svg`, `apple-touch-icon.png` (180), `web-app-manifest-{192,512}x{192,512}.png`, `site.webmanifest`
+
+## Documentation
+
+- [README](README.md): full installation and usage guide
+- [CHANGELOG](CHANGELOG.md): release history
+- [UPGRADING](UPGRADING.md): migration from blockpoint/laravel-favicon-generator 1.x
+- [CONTRIBUTING](CONTRIBUTING.md): development setup and workflow
+- [Config reference](config/favicon-generator.php): all configurable options

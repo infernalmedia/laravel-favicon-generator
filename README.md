@@ -124,6 +124,14 @@ composer test
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
+## Upgrading
+
+Please see [UPGRADING](UPGRADING.md) for details on migrating from `blockpoint/laravel-favicon-generator` 1.x.
+
+## Contributing
+
+Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+
 ## Credits
 
 - [Infernal Média](https://github.com/infernalmedia)
