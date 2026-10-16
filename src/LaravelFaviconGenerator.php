@@ -155,7 +155,8 @@ class LaravelFaviconGenerator
 
             // Create a simple SVG that embeds the PNG as an image with a square viewBox
             $svgContent = <<<SVG
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512" viewBox="0 0 512 512">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="512" height="512" viewBox="0 0 512 512">
   <image width="512" height="512" xlink:href="{$dataUri}"/>
 </svg>
 SVG;
@@ -556,7 +557,8 @@ SVG;
 
             // Create an SVG that embeds the PNG as an image with a square viewBox
             $svgContent = <<<SVG
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="{$size}" height="{$size}" viewBox="0 0 {$size} {$size}">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="{$size}" height="{$size}" viewBox="0 0 {$size} {$size}">
   <image width="{$width}" height="{$height}" x="{$posX}" y="{$posY}" xlink:href="{$dataUri}"/>
 </svg>
 SVG;
