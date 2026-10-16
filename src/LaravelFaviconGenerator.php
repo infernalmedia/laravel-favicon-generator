@@ -1,6 +1,6 @@
 <?php
 
-namespace Blockpoint\LaravelFaviconGenerator;
+namespace InfernalMedia\LaravelFaviconGenerator;
 
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Drivers\Gd\Driver;
@@ -19,11 +19,7 @@ class LaravelFaviconGenerator
     public function __construct()
     {
         // Use Imagick driver if available, otherwise fall back to GD
-        if (extension_loaded('imagick')) {
-            $driver = new ImagickDriver;
-        } else {
-            $driver = new Driver;
-        }
+        $driver = extension_loaded('imagick') ? ImagickDriver::class : Driver::class;
 
         // Create image manager with configured driver
         $this->imageManager = new ImageManager($driver);
@@ -46,7 +42,7 @@ class LaravelFaviconGenerator
         $this->generatedFiles = [];
         $this->ensureOutputDirectoryExists();
 
-        $sourceImage = $this->imageManager->read($sourceImagePath);
+        $sourceImage = $this->imageManager->decodePath($sourceImagePath);
 
         // Generate each favicon type
         $this->generateIcoFavicon($sourceImage);
@@ -217,7 +213,7 @@ SVG;
             } else {
                 // For smaller icons, use the standard approach
                 $resizedImage = $this->createExactSizeImage($sourceImage, $size, $size);
-                $resizedImage->toPng(interlaced: false, indexed: false)->save($outputPath);
+                $resizedImage->save($outputPath, interlaced: false, indexed: false);
             }
 
             $this->generatedFiles[] = "{$this->outputPath}/{$filename}";
@@ -350,8 +346,16 @@ SVG;
                 $height = $height >= 256 ? 0 : $height;
 
                 $size = strlen($pngData);
-                $iconDirEntries .= pack('CCCCvvVV',
-                    $width, $height, 0, 0, 1, $bpp, $size, $imageDataOffset
+                $iconDirEntries .= pack(
+                    'CCCCvvVV',
+                    $width,
+                    $height,
+                    0,
+                    0,
+                    1,
+                    $bpp,
+                    $size,
+                    $imageDataOffset
                 );
 
                 $imageData .= $pngData;
@@ -365,9 +369,6 @@ SVG;
             fwrite($fp, $imageData);
 
             fclose($fp);
-        } elseif (isset($pngPaths[0])) {
-            // Fallback: just use the first PNG if we can't create a proper ICO
-            copy($pngPaths[0], $outputPath);
         }
     }
 
@@ -384,7 +385,7 @@ SVG;
     protected function createExactSizeImage(ImageInterface $sourceImage, int $width, int $height): ImageInterface
     {
         // First, create a blank canvas with the exact dimensions (transparent background)
-        $canvas = $this->imageManager->create($width, $height);
+        $canvas = $this->imageManager->createImage($width, $height);
 
         // Get the source image dimensions
         $sourceWidth = $sourceImage->width();
@@ -415,7 +416,7 @@ SVG;
         $posY = (int) (($height - $newHeight) / 2);
 
         // Place the resized image on the canvas
-        return $canvas->place($resizedImage, 'top-left', $posX, $posY);
+        return $canvas->insert($resizedImage, $posX, $posY);
     }
 
     /**
@@ -432,7 +433,7 @@ SVG;
         if (! extension_loaded('imagick')) {
             // Fallback to Intervention Image if Imagick is not available
             $resizedImage = $this->createExactSizeImage($sourceImage, $size, $size);
-            $resizedImage->toPng(interlaced: false, indexed: false)->save($outputPath);
+            $resizedImage->save($outputPath, interlaced: false, indexed: false);
 
             return;
         }
@@ -440,7 +441,7 @@ SVG;
         try {
             // Get the source image as a temporary file
             $tempSourcePath = sys_get_temp_dir().'/source_image_'.uniqid().'.png';
-            $sourceImage->toPng()->save($tempSourcePath);
+            $sourceImage->save($tempSourcePath);
 
             // Create a new Imagick instance
             $imagick = new \Imagick($tempSourcePath);
@@ -498,7 +499,7 @@ SVG;
         } catch (\Exception $e) {
             // Fallback to Intervention Image if Imagick fails
             $resizedImage = $this->createExactSizeImage($sourceImage, $size, $size);
-            $resizedImage->toPng(interlaced: false, indexed: false)->save($outputPath);
+            $resizedImage->save($outputPath, interlaced: false, indexed: false);
         }
     }
 

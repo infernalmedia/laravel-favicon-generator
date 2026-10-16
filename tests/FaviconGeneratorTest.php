@@ -1,49 +1,73 @@
 <?php
 
-use Blockpoint\LaravelFaviconGenerator\LaravelFaviconGenerator;
+// phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
+
+namespace InfernalMedia\LaravelFaviconGenerator\Tests;
+
 use Illuminate\Support\Facades\File;
+use InfernalMedia\LaravelFaviconGenerator\LaravelFaviconGenerator;
+use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 
-it('can generate favicons', function () {
-    // Create a test image
-    $testImagePath = sys_get_temp_dir().'/test-favicon-source.png';
+/**
+ * @see LaravelFaviconGenerator
+ */
+#[Group('favicon-generator')]
+final class FaviconGeneratorTest extends TestCase
+{
+    private string $testImagePath;
 
-    // Create a simple 100x100 test image
-    $image = imagecreatetruecolor(100, 100);
-    imagefill($image, 0, 0, imagecolorallocate($image, 255, 0, 0));
-    imagepng($image, $testImagePath);
-    imagedestroy($image);
+    private string $outputDir;
 
-    // Make sure the test image exists
-    expect(File::exists($testImagePath))->toBeTrue();
+    protected function setUp(): void
+    {
+        parent::setUp();
 
-    // Set up the output path for testing
-    config(['favicon-generator.output_path' => 'favicon-test']);
+        config(['favicon-generator.output_path' => 'favicon-test']);
 
-    // Clean up any existing test files
-    $outputDir = public_path('favicon-test');
-    if (File::exists($outputDir)) {
-        File::deleteDirectory($outputDir);
+        $this->testImagePath = sys_get_temp_dir().'/test-favicon-source.png';
+        $this->outputDir = public_path('favicon-test');
+
+        File::deleteDirectory($this->outputDir);
     }
 
-    // Generate the favicons
-    $generator = new LaravelFaviconGenerator;
-    $generatedFiles = $generator->generate($testImagePath);
+    protected function tearDown(): void
+    {
+        File::deleteDirectory($this->outputDir);
+        File::delete($this->testImagePath);
 
-    // Check that files were generated
-    expect($generatedFiles)->not->toBeEmpty();
-
-    // Check that the output directory exists
-    expect(File::exists($outputDir))->toBeTrue();
-
-    // Check that the expected files exist
-    expect(File::exists(public_path('favicon-test/favicon.ico')))->toBeTrue();
-    expect(File::exists(public_path('favicon-test/favicon-96x96.png')))->toBeTrue();
-    expect(File::exists(public_path('favicon-test/apple-touch-icon.png')))->toBeTrue();
-    expect(File::exists(public_path('favicon-test/site.webmanifest')))->toBeTrue();
-
-    // Clean up
-    File::deleteDirectory($outputDir);
-    if (File::exists($testImagePath)) {
-        File::delete($testImagePath);
+        parent::tearDown();
     }
-});
+
+    #[Test]
+    public function it_generates_favicons(): void
+    {
+        $this->createTestImage();
+
+        $generatedFiles = (new LaravelFaviconGenerator)->generate($this->testImagePath);
+
+        $this->assertNotEmpty($generatedFiles);
+        $this->assertDirectoryExists($this->outputDir);
+        $this->assertFileExists(public_path('favicon-test/favicon.ico'));
+        $this->assertFileExists(public_path('favicon-test/favicon-96x96.png'));
+        $this->assertFileExists(public_path('favicon-test/apple-touch-icon.png'));
+        $this->assertFileExists(public_path('favicon-test/site.webmanifest'));
+    }
+
+    #[Test]
+    public function it_throws_an_exception_when_the_source_image_is_missing(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        (new LaravelFaviconGenerator)->generate('/non/existent/image.png');
+    }
+
+    private function createTestImage(): void
+    {
+        $image = imagecreatetruecolor(100, 100);
+        imagefill($image, 0, 0, imagecolorallocate($image, 255, 0, 0));
+        imagepng($image, $this->testImagePath);
+        imagedestroy($image);
+    }
+}

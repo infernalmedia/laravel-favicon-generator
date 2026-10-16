@@ -1,75 +1,70 @@
 {
-    "name": "blockpoint/laravel-favicon-generator",
+    "name": "infernalmedia/laravel-favicon-generator",
     "description": "Package to generate favicons within your Laravel application.",
     "keywords": [
-        "Blockpoint",
+        "InfernalMedia",
         "laravel",
+        "favicon",
         "laravel-favicon-generator"
     ],
-    "homepage": "https://github.com/blockpoint/laravel-favicon-generator",
+    "homepage": "https://github.com/infernalmedia/laravel-favicon-generator",
     "license": "MIT",
     "authors": [
         {
-            "name": "Blockpoint",
-            "email": "info@blockpoint.nl",
+            "name": "Guillaume Ernst",
+            "email": "guillaume.ernst@infernal.media",
             "role": "Developer"
         }
     ],
     "require": {
-        "php": "^8.1",
-        "spatie/laravel-package-tools": "^1.16",
-        "illuminate/contracts": "^10.0||^11.0||^12.0",
-        "intervention/image": "^3.0"
+        "php": "^8.3",
+        "illuminate/contracts": "^12.0|^13.0",
+        "intervention/image": "^4.3",
+        "spatie/laravel-package-tools": "^1.93"
     },
     "require-dev": {
-        "laravel/pint": "^1.14",
-        "nunomaduro/collision": "^8.1.1||^7.10.0",
-        "larastan/larastan": "^2.9||^3.0",
-        "orchestra/testbench": "^10.0.0||^9.0.0||^8.22.0",
-        "pestphp/pest": "^3.0",
-        "pestphp/pest-plugin-arch": "^3.0",
-        "pestphp/pest-plugin-laravel": "^3.0",
-        "phpstan/extension-installer": "^1.3||^2.0",
-        "phpstan/phpstan-deprecation-rules": "^1.1||^2.0",
-        "phpstan/phpstan-phpunit": "^1.3||^2.0"
+        "larastan/larastan": "^3.13",
+        "laravel/pint": "^1.24",
+        "nunomaduro/collision": "^8.9",
+        "orchestra/testbench": "^10.0|^11.0",
+        "phpstan/extension-installer": "^1.4|^2.0",
+        "phpstan/phpstan-deprecation-rules": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0",
+        "phpunit/phpunit": "^12.5.8|^13.0.0"
     },
     "autoload": {
         "psr-4": {
-            "Blockpoint\\LaravelFaviconGenerator\\": "src/",
-            "Blockpoint\\LaravelFaviconGenerator\\Database\\Factories\\": "database/factories/"
+            "InfernalMedia\\LaravelFaviconGenerator\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Blockpoint\\LaravelFaviconGenerator\\Tests\\": "tests/",
-            "Workbench\\App\\": "workbench/app/"
+            "InfernalMedia\\LaravelFaviconGenerator\\Tests\\": "tests/"
         }
     },
     "scripts": {
         "post-autoload-dump": "@composer run prepare",
         "prepare": "@php vendor/bin/testbench package:discover --ansi",
         "analyse": "vendor/bin/phpstan analyse",
-        "test": "vendor/bin/pest",
-        "test-coverage": "vendor/bin/pest --coverage",
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage",
         "format": "vendor/bin/pint"
     },
     "config": {
         "sort-packages": true,
         "allow-plugins": {
-            "pestphp/pest-plugin": true,
             "phpstan/extension-installer": true
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Blockpoint\\LaravelFaviconGenerator\\LaravelFaviconGeneratorServiceProvider"
+                "InfernalMedia\\LaravelFaviconGenerator\\LaravelFaviconGeneratorServiceProvider"
             ],
             "aliases": {
-                "LaravelFaviconGenerator": "Blockpoint\\LaravelFaviconGenerator\\Facades\\LaravelFaviconGenerator"
+                "LaravelFaviconGenerator": "InfernalMedia\\LaravelFaviconGenerator\\Facades\\LaravelFaviconGenerator"
             }
         }
     },
-    "minimum-stability": "dev",
     "prefer-stable": true
 }

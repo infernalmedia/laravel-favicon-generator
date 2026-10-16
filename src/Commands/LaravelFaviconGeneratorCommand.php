@@ -1,10 +1,10 @@
 <?php
 
-namespace Blockpoint\LaravelFaviconGenerator\Commands;
+namespace InfernalMedia\LaravelFaviconGenerator\Commands;
 
-use Blockpoint\LaravelFaviconGenerator\LaravelFaviconGenerator;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
+use InfernalMedia\LaravelFaviconGenerator\LaravelFaviconGenerator;
 
 class LaravelFaviconGeneratorCommand extends Command
 {

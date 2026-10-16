@@ -1,6 +1,6 @@
 <?php
 
-// config for Blockpoint/LaravelFaviconGenerator
+// config for InfernalMedia/LaravelFaviconGenerator
 return [
     /*
     |--------------------------------------------------------------------------

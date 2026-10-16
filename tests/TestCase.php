@@ -1,37 +1,21 @@
 <?php
 
-namespace Blockpoint\LaravelFaviconGenerator\Tests;
+namespace InfernalMedia\LaravelFaviconGenerator\Tests;
 
-use Blockpoint\LaravelFaviconGenerator\LaravelFaviconGeneratorServiceProvider;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use InfernalMedia\LaravelFaviconGenerator\LaravelFaviconGeneratorServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Blockpoint\\LaravelFaviconGenerator\\Database\\Factories\\'.class_basename($modelName).'Factory'
-        );
-    }
-
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
         return [
             LaravelFaviconGeneratorServiceProvider::class,
         ];
     }
 
-    public function getEnvironmentSetUp($app)
+    public function getEnvironmentSetUp($app): void
     {
         config()->set('database.default', 'testing');
-
-        /*
-         foreach (\Illuminate\Support\Facades\File::allFiles(__DIR__ . '/database/migrations') as $migration) {
-            (include $migration->getRealPath())->up();
-         }
-         */
     }
 }

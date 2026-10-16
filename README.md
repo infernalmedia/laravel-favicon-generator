@@ -1,14 +1,16 @@
 # Laravel Favicon Generator
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/blockpoint/laravel-favicon-generator.svg?style=flat-square)](https://packagist.org/packages/blockpoint/laravel-favicon-generator)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/blockpoint/laravel-favicon-generator/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/blockpoint/laravel-favicon-generator/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/blockpoint/laravel-favicon-generator/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/blockpoint/laravel-favicon-generator/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/blockpoint/laravel-favicon-generator.svg?style=flat-square)](https://packagist.org/packages/blockpoint/laravel-favicon-generator)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/infernalmedia/laravel-favicon-generator.svg?style=flat-square)](https://packagist.org/packages/infernalmedia/laravel-favicon-generator)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/infernalmedia/laravel-favicon-generator/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/infernalmedia/laravel-favicon-generator/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/infernalmedia/laravel-favicon-generator/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/infernalmedia/laravel-favicon-generator/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/infernalmedia/laravel-favicon-generator.svg?style=flat-square)](https://packagist.org/packages/infernalmedia/laravel-favicon-generator)
 
 A Laravel package to generate and manage high-quality favicons for your web application. This package provides two main features:
 
 1. A generator to create all necessary favicon files from a single source image with optimal quality
 2. A Blade component to easily include the favicon meta tags in your HTML
+
+This package is a maintained fork of [`blockpoint/laravel-favicon-generator`](https://github.com/blockpoint/laravel-favicon-generator), compatible with Laravel 12 and 13.
 
 ### Features
 
@@ -19,12 +21,18 @@ A Laravel package to generate and manage high-quality favicons for your web appl
 - Generates SVG favicon from any source image format
 - Maintains aspect ratio while ensuring exact dimensions
 
+## Requirements
+
+- PHP 8.3 or higher
+- Laravel 12 or 13
+- GD or Imagick PHP extension
+
 ## Installation
 
 You can install the package via composer:
 
 ```bash
-composer require blockpoint/laravel-favicon-generator
+composer require infernalmedia/laravel-favicon-generator
 ```
 
 You can publish the config file with:
@@ -49,7 +57,7 @@ To generate favicons from a source image, use the provided Artisan command:
 php artisan favicon:generate {path/to/your/source/image.png}
 ```
 
-This will generate the following favicon files in your public/favicon directory:
+This will generate the following favicon files in your `public/favicon` directory (configurable via the `output_path` config option):
 
 - favicon.ico for general browser support
 - favicon-96x96.png for higher-resolution displays
@@ -72,13 +80,23 @@ To include the favicon meta tags in your HTML, add the following component to yo
 This will output the necessary meta tags for all generated favicons:
 
 ```html
-<link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+<link
+    rel="icon"
+    type="image/png"
+    href="/favicon/favicon-96x96.png"
+    sizes="96x96"
+/>
 <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 <link rel="shortcut icon" href="/favicon/favicon.ico" />
-<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+<link
+    rel="apple-touch-icon"
+    sizes="180x180"
+    href="/favicon/apple-touch-icon.png"
+/>
 <link rel="manifest" href="/favicon/site.webmanifest" />
 <meta name="application-name" content="Your App Name" />
 <meta name="apple-mobile-web-app-title" content="Your App Name" />
+<meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 ```
@@ -90,7 +108,7 @@ The component will automatically use the application name from your web manifest
 You can also generate favicons programmatically:
 
 ```php
-use Blockpoint\LaravelFaviconGenerator\LaravelFaviconGenerator;
+use InfernalMedia\LaravelFaviconGenerator\LaravelFaviconGenerator;
 
 $generator = new LaravelFaviconGenerator();
 $generatedFiles = $generator->generate('path/to/your/source/image.png');
@@ -105,6 +123,12 @@ composer test
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+
+## Credits
+
+- [Guillaume Ernst](https://github.com/eGuillaume)
+- [Blockpoint](https://github.com/blockpoint) for the original package
+- [All Contributors](../../contributors)
 
 ## License
 
