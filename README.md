@@ -2,7 +2,7 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/infernalmedia/laravel-favicon-generator.svg?style=flat-square)](https://packagist.org/packages/infernalmedia/laravel-favicon-generator)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/infernalmedia/laravel-favicon-generator/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/infernalmedia/laravel-favicon-generator/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/infernalmedia/laravel-favicon-generator/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/infernalmedia/laravel-favicon-generator/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/infernalmedia/laravel-favicon-generator/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/infernalmedia/laravel-favicon-generator/actions?query=workflow%3Afix-php-code-style-issues.yml+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/infernalmedia/laravel-favicon-generator.svg?style=flat-square)](https://packagist.org/packages/infernalmedia/laravel-favicon-generator)
 
 A Laravel package to generate and manage high-quality favicons for your web application. This package provides two main features:
@@ -12,10 +12,10 @@ A Laravel package to generate and manage high-quality favicons for your web appl
 
 This package is a maintained fork of [`blockpoint/laravel-favicon-generator`](https://github.com/blockpoint/laravel-favicon-generator), compatible with Laravel 12 and 13.
 
-### Features
+## Features
 
 - Generates high-quality PNG icons using Imagick when available (with GD fallback)
-- Creates favicon.ico, favicon-96x96.png, favicon.svg, apple-touch-icon-180x180.png
+- Creates favicon.ico, favicon-96x96.png, favicon.svg, apple-touch-icon.png
 - Generates web app manifest icons (192x192 and 512x512)
 - Creates site.webmanifest file
 - Generates SVG favicon from any source image format
@@ -38,13 +38,13 @@ composer require infernalmedia/laravel-favicon-generator
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag="laravel-favicon-generator-config"
+php artisan vendor:publish --tag="favicon-generator-config"
 ```
 
 Optionally, you can publish the views using:
 
 ```bash
-php artisan vendor:publish --tag="laravel-favicon-generator-views"
+php artisan vendor:publish --tag="favicon-generator-views"
 ```
 
 ## Usage
@@ -126,7 +126,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 
 ## Credits
 
-- [Guillaume Ernst](https://github.com/eGuillaume)
+- [Infernal Média](https://github.com/infernalmedia)
 - [Blockpoint](https://github.com/blockpoint) for the original package
 - [All Contributors](../../contributors)
 
